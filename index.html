@@ -30,8 +30,6 @@
   <body v-cloak v-scope="dataset()">
     <h1>NHK番組表</h1>
 
-    <button @click="getProgramList">番組表取得</button>
-
     <!-- データが取得できたときにdl要素を表示する -->
     <label
       >地域：
@@ -49,6 +47,7 @@
         <option value="r3">NHK FM</option>
       </select>
     </label>
+    <button @click="getProgramList">番組表取得</button>
 
     <table>
       <tr>
