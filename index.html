@@ -33,7 +33,7 @@
     <!-- データが取得できたときにdl要素を表示する -->
     <label
       >地域：
-      <select>
+      <select v-model="region">
         <option value="130">東京</option>
         <option value="270">大阪</option>
       </select>
@@ -41,7 +41,7 @@
 
     <label
       >チャンネル：
-      <select>
+      <select v-model="channel">
         <option value="g1">NHK 総合1</option>
         <option value="s1">NHK BS1</option>
         <option value="r3">NHK FM</option>
