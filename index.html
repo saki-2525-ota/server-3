@@ -68,13 +68,44 @@
       return {
         // 変数（プロパティ）
         list: [],
-        apikey: '_ENTER_YOUR_KEY_', // 自分で取得する
+        apikey: 'iMKS7yIh4jxubLwmbPCUi3cEE8NAV0EE', // 自分で取得する
         region: '130',
         channel: 'g1',
 
-        fetchData
-        //const url = `https://api.nhk.or.jp/v2/pg/list/${this.region}/${this.channel}.json?key=${this.apikey}`,
-        // 関数（メソッド）
+        formatTime(timeStr) {
+          return timeStr ? timeStr.slice(11, 16) : '';
+        },
+
+        async fetchdata(region, channel) {
+          if (!this.apikey) {
+            alert('APIキーを設定してください');
+            return null;
+          }
+          const url = `https://api.nhk.or.jp/v2/pg/list/${region}/${channel}.json?key=${this.apikey}`;
+          try {
+            const res = await fetch(url);
+            const data = await res.json();
+            return data;
+          } catch (err) {
+            console.error(err);
+            alert('番組表の取得に失敗しました');
+            return null;
+          }
+        },
+
+        async getProgramList() {
+          const data = await this.fetchdata(this.region, this.channel);
+          if (!data) return;
+
+          // data.list[0].services[0].segments から番組情報を抽出
+          this.list =
+            data.list[0]?.services?.[0]?.segments?.map((seg) => ({
+              id: seg.id,
+              title: seg.title,
+              description: seg.detail,
+              start_time: seg.start_time
+            })) || [];
+        }
       };
     }
   </script>
