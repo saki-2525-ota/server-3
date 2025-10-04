@@ -49,16 +49,16 @@
     </label>
     <button @click="getProgramList">番組表取得</button>
 
-    <table>
+    <table v-if="list.length">
       <tr>
         <th>時刻</th>
         <th>タイトル</th>
         <th>内容</th>
       </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr v-for="program in list" :key="program.id">
+        <td>{{formatTime(program.start_time)}}</td>
+        <td>{{program.title}}</td>
+        <td>{{program.description}}</td>
       </tr>
     </table>
   </body>
@@ -67,9 +67,13 @@
     function dataset() {
       return {
         // 変数（プロパティ）
-        list: false,
-        apikey: '' // 自分で取得する
+        list: [],
+        apikey: '_ENTER_YOUR_KEY_', // 自分で取得する
+        region: '130',
+        channel: 'g1',
 
+        fetchData
+        //const url = `https://api.nhk.or.jp/v2/pg/list/${this.region}/${this.channel}.json?key=${this.apikey}`,
         // 関数（メソッド）
       };
     }
